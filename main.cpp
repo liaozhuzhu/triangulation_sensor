@@ -29,7 +29,7 @@ void loop() {
     servo1.write(pos);
     delay(10);
 
-    if (cm < 5) {
+    if (cm < 10) {
       digitalWrite(LED_PIN, HIGH);
     } else {
       digitalWrite(LED_PIN, LOW);
@@ -40,7 +40,7 @@ void loop() {
     servo1.write(pos);
     delay(10);
 
-    if (cm < 5) {
+    if (cm < 10) {
       digitalWrite(LED_PIN, HIGH);
     } else {
       digitalWrite(LED_PIN, LOW);
