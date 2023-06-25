@@ -27,23 +27,23 @@ void loop() {
   cm = 0.017 * duration_echo;
   for (pos = 0; pos <= 180; pos += 2) {
     servo1.write(pos);
+    delay(10);
 
     if (cm < 5) {
       digitalWrite(LED_PIN, HIGH);
     } else {
       digitalWrite(LED_PIN, LOW);
     }
-    delay(10);
   }
 
   for (pos = 180; pos >= 0; pos-=2) {
     servo1.write(pos);
+    delay(10);
 
     if (cm < 5) {
       digitalWrite(LED_PIN, HIGH);
     } else {
       digitalWrite(LED_PIN, LOW);
     }
-    delay(10);
   }
 }
