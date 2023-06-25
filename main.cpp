@@ -19,31 +19,34 @@ void setup() {
 }
 
 void loop() {
+  checkDistance();
+
+  for (pos = 0; pos <= 180; pos += 2) {
+    servo1.write(pos);
+    delay(10);
+    checkDistance();
+  }
+
+  for (pos = 180; pos >= 0; pos -= 2) {
+    servo1.write(pos);
+    delay(10);
+    checkDistance();
+  }
+}
+
+void checkDistance() {
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
   digitalWrite(TRIG_PIN, HIGH);
-  delay(100);
+  delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
 
   duration_echo = pulseIn(ECHO_PIN, HIGH);
   cm = 0.017 * duration_echo;
-  for (pos = 0; pos <= 180; pos += 2) {
-    servo1.write(pos);
-    delay(10);
 
-    if (cm < 10) {
-      digitalWrite(LED_PIN, HIGH);
-    } else {
-      digitalWrite(LED_PIN, LOW);
-    }
-  }
-
-  for (pos = 180; pos >= 0; pos-=2) {
-    servo1.write(pos);
-    delay(10);
-
-    if (cm < 10) {
-      digitalWrite(LED_PIN, HIGH);
-    } else {
-      digitalWrite(LED_PIN, LOW);
-    }
+  if (cm < 10) {
+    digitalWrite(LED_PIN, HIGH);
+  } else {
+    digitalWrite(LED_PIN, LOW);
   }
 }
