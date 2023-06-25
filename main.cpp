@@ -10,6 +10,11 @@ const int ECHO_PIN = 7;
 const int TRIG_PIN = 6;
 float duration_echo, cm;
 
+unsigned long previousServoMillis = 0;
+unsigned long previousDistanceMillis = 0;
+const long servoInterval = 10;    // Delay interval for servo movement (in milliseconds)
+const long distanceInterval = 100; 
+
 void setup() {
   pinMode(LED_PIN, OUTPUT);
   pinMode(LED_PIN2, OUTPUT);
@@ -19,18 +24,27 @@ void setup() {
 }
 
 void loop() {
-  checkDistance();
+  unsigned long currentMillis = millis();
 
-  for (pos = 0; pos <= 180; pos += 2) {
-    servo1.write(pos);
-    delay(10);
-    checkDistance();
+  // Move servo gradually
+  if (currentMillis - previousServoMillis >= servoInterval) {
+    previousServoMillis = currentMillis;
+    moveServo();
   }
 
-  for (pos = 180; pos >= 0; pos -= 2) {
-    servo1.write(pos);
-    delay(10);
+  // Check distance periodically
+  if (currentMillis - previousDistanceMillis >= distanceInterval) {
+    previousDistanceMillis = currentMillis;
     checkDistance();
+  }
+}
+
+void moveServo() {
+  if (pos <= 180) {
+    servo1.write(pos);
+    pos += 1;
+  } else {
+    pos = 0;
   }
 }
 
