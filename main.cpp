@@ -1,6 +1,8 @@
 #include <Servo.h>
+#include <LiquidCrystal.h>
 
 Servo servo1;
+LiquidCrystal lcd(13,12,10,9,8,5);
 
 int pos = 0;
 
@@ -21,6 +23,7 @@ void setup() {
   pinMode(ECHO_PIN, INPUT);
   pinMode(TRIG_PIN, OUTPUT);
   servo1.attach(4);
+  lcd.begin(16,2);
 }
 
 void loop() {
@@ -63,4 +66,7 @@ void checkDistance() {
   } else {
     digitalWrite(LED_PIN, LOW);
   }
+
+  lcd.setCursor(0,0);
+  lcd.print(cm);
 }
